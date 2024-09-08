@@ -1,0 +1,8 @@
+# k8s-playbook.yaml
+- name: Trigger playbook demo
+  hosts: all
+  gather_facts: false
+  tasks:
+    - name: Display info
+      ansible.builtin.debug:
+        msg: "ConfigMap in namespace '{{ event.resource.metadata.namespace }}' with name '{{ event.resource.metadata.name }} ‘{{ event.type | capitalize }}’ with the message ‘{{ event.resource.data.message}}'"

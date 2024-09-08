@@ -9,5 +9,10 @@
   rules:
     - name: Notify
       condition: event.type == "ADDED"
+      # action:
+      #   debug:
       action:
-        debug:
+        run_playbook:
+          name: playbooks/k8s-playbook.yaml
+          extra_vars:
+            event: "{{ event }}"
