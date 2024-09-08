@@ -1,4 +1,4 @@
-# Event-Driven-Kubernets-with-Ansible
+# Event-Driven-Kubernetes-with-Ansible
 
 Pre-req
 
@@ -26,6 +26,15 @@ $ minikube start \
     --kubernetes-version=v1.31.0 \
     --container-runtime=containerd \
     --profile k8s-1-31
+
+# add ingress if needed
+$ minikube addons enable ingress --profile k8s-1-31
+
+# add /etc/hosts entry for DNS
+$ echo "$(minikube ip --profile k8s-1-31) k8slab.local" | sudo tee -a /etc/hosts
+
+# housekeeping - delete entries
+$ sudo sed -i "/$(minikube ip --profile k8s-1-31)/d" /etc/hosts
 ```
 
 
@@ -61,6 +70,26 @@ $ kubectl create configmap -n default eda-example --from-literal=message="Kubern
 configmap/eda-example created
 ```
 
+## Kubernetes Demo
+
+Create resource
+
+```shell
+$ kubectl apply -f kubernetes-yamls/portal-deployment.yaml
+namespace/eda-demo created
+configmap/video-configmap created
+deployment.apps/video created
+service/portal-service created
+
+$ kubectl port-forward service/portal-service 8080:8080 -n eda-demo
+Forwarding from 127.0.0.1:8080 -> 5000
+Forwarding from [::1]:8080 -> 5000
+```
+
+Check [http://localhost:8080](http://localhost:8080/)
+
+
+
 ## Troubleshooting
 
 
@@ -81,3 +110,8 @@ Attempts made:
 ```shell
 $ sudo dnf install postgresql-devel
 ```
+
+
+## References
+
+- [github.com/redhat-developer-demos/k8s-ansible-eda](https://github.com/redhat-developer-demos/k8s-ansible-eda)

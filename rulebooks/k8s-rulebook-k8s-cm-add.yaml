@@ -8,7 +8,7 @@
         namespace: eda-demo
   rules:
     - name: Notify
-      condition: event.type == "MODIFIED"
+      condition: event.type == "ADDED"
       # action:
       #   debug:
       action:

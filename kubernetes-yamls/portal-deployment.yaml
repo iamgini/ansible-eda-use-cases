@@ -1,0 +1,91 @@
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  labels:
+    project: ingress-demo
+  name: eda-demo
+
+---
+# configmap
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: video-configmap
+  namespace: eda-demo
+data:
+  color: green
+  portal: video
+
+---
+# video Deployment
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: video
+  namespace: eda-demo
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: video
+  template:
+    metadata:
+      labels:
+        app: video
+    spec:
+      containers:
+        - name: video
+          image: quay.io/iamgini/k8sbible-portal:1.1
+          env:
+            - name: COLOR
+              valueFrom:
+                configMapKeyRef:
+                  name: video-configmap
+                  key: color
+            - name: PORTAL
+              valueFrom:
+                configMapKeyRef:
+                  name: video-configmap
+                  key: portal
+          ports:
+            - containerPort: 5000
+
+---
+# video service
+apiVersion: v1
+kind: Service
+metadata:
+  name: portal-service
+  namespace: eda-demo
+spec:
+  type: ClusterIP
+  selector:
+    app: video
+  ports:
+    - port: 8080      # Port exposed within the cluster
+      targetPort: 5000  # Port on the pods
+      protocol: TCP   # Protocol
+
+---
+# ingress
+# ingress/portal-ingress.yaml
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: portal-ingress
+  namespace: eda-demo
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+spec:
+  rules:
+    - host: k8slab.local
+      http:
+        paths:
+          - path: /portal
+            pathType: Prefix
+            backend:
+              service:
+                name: portal-service
+                port:
+                  number: 8080

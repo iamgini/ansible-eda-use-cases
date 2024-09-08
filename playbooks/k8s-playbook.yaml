@@ -6,3 +6,18 @@
     - name: Display info
       ansible.builtin.debug:
         msg: "ConfigMap in namespace '{{ event.resource.metadata.namespace }}' with name '{{ event.resource.metadata.name }} ‘{{ event.type | capitalize }}’ with the message ‘{{ event.resource.data.message}}'"
+      when: show_info | default('no') | bool
+
+    - name: Send email with a ConfigMap change
+      community.general.mail:
+        host: mailer
+        port: 1025
+        from: YOUREMAIL@example.com
+        subject: New ConfigMap provisioned.
+        body: ConfigMap in namespace '{{ ansible_eda.event.resource.metadata.namespace }}' with name '{{ ansible_eda.event.resource.metadata.name }} provisioned.
+      delegate_to: localhost
+      when: send_email | default('no') | bool
+
+    - name: Trigger rollout restart of the deployment
+      command: >
+        kubectl rollout restart deployment video -n eda-demo
