@@ -14,8 +14,8 @@ metadata:
   name: video-configmap
   namespace: eda-demo
 data:
-  color: blue
-  portal: awesome
+  color: lightblue
+  portal: k8s
 
 ---
 # video Deployment
