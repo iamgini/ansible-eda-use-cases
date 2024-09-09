@@ -25,16 +25,17 @@ $ minikube start \
     --memory=2g \
     --kubernetes-version=v1.31.0 \
     --container-runtime=containerd \
-    --profile k8s-1-31
+    --profile k8s-eda
 
 # add ingress if needed
-$ minikube addons enable ingress --profile k8s-1-31
+$ minikube addons enable ingress --profile k8s-eda
+# or minikube start --addons=ingress
 
 # add /etc/hosts entry for DNS
-$ echo "$(minikube ip --profile k8s-1-31) k8slab.local" | sudo tee -a /etc/hosts
+$ echo "$(minikube ip --profile k8s-eda) k8slab.local" | sudo tee -a /etc/hosts
 
-# housekeeping - delete entries
-$ sudo sed -i "/$(minikube ip --profile k8s-1-31)/d" /etc/hosts
+# housekeeping - delete entries from /etc/hosts once testing done
+$ sudo sed -i "/$(minikube ip --profile k8s-eda)/d" /etc/hosts
 ```
 
 
@@ -80,14 +81,17 @@ namespace/eda-demo created
 configmap/video-configmap created
 deployment.apps/video created
 service/portal-service created
+```
 
+Check [http://k8slab.local/portal](http://k8slab.local/portal)
+
+Note: You can also use `kubectl port-forward` to test the same if no ingress is available.
+
+```shell
 $ kubectl port-forward service/portal-service 8080:8080 -n eda-demo
 Forwarding from 127.0.0.1:8080 -> 5000
 Forwarding from [::1]:8080 -> 5000
 ```
-
-Check [http://localhost:8080](http://localhost:8080/)
-
 
 
 ## Troubleshooting
