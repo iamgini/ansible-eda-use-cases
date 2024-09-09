@@ -93,7 +93,6 @@ Forwarding from 127.0.0.1:8080 -> 5000
 Forwarding from [::1]:8080 -> 5000
 ```
 
-
 ## Troubleshooting
 
 
@@ -114,7 +113,6 @@ Attempts made:
 ```shell
 $ sudo dnf install postgresql-devel
 ```
-
 
 ## References
 
