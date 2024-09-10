@@ -116,7 +116,12 @@ $ sudo dnf install postgresql-devel
 
 ## References
 
+- [Getting Started with Event-Driven Ansible](https://www.ansible.com/blog/getting-started-with-event-driven-ansible/)
 - [github.com/redhat-developer-demos/k8s-ansible-eda](https://github.com/redhat-developer-demos/k8s-ansible-eda)
 - [github.com/redhat-developer-demos/ansible-eda-alertmanager](https://github.com/redhat-developer-demos/ansible-eda-alertmanager)
 - [OpenShift application monitoring with Event-Driven Ansible & Alertmanager](https://developers.redhat.com/articles/2024/01/08/openshift-application-monitoring-event-driven-ansible-alertmanager#)
 - [Event-driven disaster recovery with Red Hat Advanced Cluster Management for Kubernetes and Ansible Automation Platform](https://www.redhat.com/en/blog/event-driven-disaster-recovery)
+- [Event-driven Ansible + Gitops](https://www.youtube.com/watch?v=Bb51DftLbPE)(Video)
+- [Kubernetes Meets Event-Driven Ansible](https://www.ansible.com/blog/kubernetes-meets-event-driven-ansible/)
+
+Decision Engine image: `registry.redhat.io/ansible-automation-platform-24/de-supported-rhel9:1.0.7-42`
