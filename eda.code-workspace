@@ -4,5 +4,7 @@
 			"path": ".."
 		}
 	],
-	"settings": {}
+	"settings": {
+		"ansible.python.interpreterPath": "/home/gmadappa/pyvirt-eda/bin/python"
+	}
 }

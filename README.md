@@ -61,7 +61,7 @@ $ ansible-galaxy collection install sabre1041.eda
 ```
 
 ```shell
-ansible-rulebook -i hosts --rulebook k8s-rulebook.yaml --verbose
+ansible-rulebook -i hosts --rulebook rulebooks/k8s-rulebook.yaml --verbose
 ```
 
 Create a configmap to test
