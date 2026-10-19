@@ -15,7 +15,7 @@ metadata:
   namespace: eda-demo
 data:
   color: red
-  portal: demo
+  portal: shopping
 
 ---
 # video Deployment

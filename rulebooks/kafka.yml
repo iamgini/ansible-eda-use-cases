@@ -1,0 +1,27 @@
+---
+- name: Listen for messages on a kafka topic
+  hosts: all
+  sources:
+    - ansible.eda.kafka:
+        host: "{{ kafka_host }}"
+        port: "{{ kafka_port }}"
+        topic: "{{ kafka_topic }}"
+        group_id: "{{ kafka_group }}"
+
+  rules:
+    - name: R1 - Heard "Hello!"
+      condition: event.body.message == "Hello!"
+      action:
+        debug:
+          msg: "You said, '{{ event.body.message }}'. Is it me you're looking for?"
+
+    - name: R2 - Didn't hear "Hello!"
+      condition: event.body.message is defined and event.body.message != "Hello!"
+      action:
+        debug:
+          msg: "You said, '{{ event.body.message }}'. Is that what you meant to say?"
+
+    - name: R3 - Debug
+      condition: event.meta is defined
+      action:
+        debug:
